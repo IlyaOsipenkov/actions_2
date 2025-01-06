@@ -1,3 +1,3 @@
-module github.com/ilyaosipenkov/test_actions_2
+module github.com/ilyaosipenkov/actions_2
 
 go 1.23.4
