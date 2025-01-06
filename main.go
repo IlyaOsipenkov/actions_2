@@ -12,6 +12,7 @@ func main() {
 	for i := 0; i < 5; i++ {
 		go func() {
 			fmt.Println(i)
+			fmt.Println("test cringe")
 			wg.Done()
 		}()
 	}
