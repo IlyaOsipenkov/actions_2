@@ -6,26 +6,33 @@ import (
 	"time"
 )
 
+var counter int
+
 func main() {
 	var wg sync.WaitGroup
-	wg.Add(1000)
+	numRoutines := 1000
+	wg.Add(numRoutines)
 
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < numRoutines; i++ {
 		go func(i int) {
-			time.Sleep(time.Millisecond * 1) // Добавление задержки
-			fmt.Println(i)
-			fmt.Println("test cringe")
-			wg.Done()
+			defer wg.Done()
+
+			// Добавим задержку для повышения вероятности гонки
+			time.Sleep(time.Millisecond * time.Duration(i%10))
+
+			// Увеличим значение счетчика (область гонки)
+			counter++
+			fmt.Printf("Goroutine %d, Counter: %d\n", i, counter)
 		}(i)
 	}
 
 	wg.Wait()
+	fmt.Printf("Final Counter: %d\n", counter)
 }
 
 func MaxInt(a, b int) int {
 	if a >= b {
 		return a
 	}
-
 	return b
 }
